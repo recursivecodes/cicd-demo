@@ -63,11 +63,6 @@ jobs:
           echo "${{secrets.VM_SSH_PUB_KEY}}" >> /home/runner/.oci/id_vm.pub
           touch /home/runner/cloud-init.sh
 
-      - name: 'Fix Config File Permissions'
-        run: |
-          oci setup repair-file-permissions --file /home/runner/.oci/config
-          oci setup repair-file-permissions --file /home/runner/.oci/key.pem
-
       - name: 'Create Instance'
         run: |
           ./gradlew --stacktrace step01 \
