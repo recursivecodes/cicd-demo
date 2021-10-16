@@ -68,7 +68,7 @@ jobs:
           ./gradlew --stacktrace step01 \
             -Doci.compartment.id=${{secrets.VM_COMPARTMENT_OCID}} \
             -Doci.instance.name=cicddemo2 \
-            -PpublicKeyFile=/home/runner/.oci/id_vm.pub
+            -PpublicKeyFile=/home/runner/.oci/id_vm.pub \
             -PuserDataFile=/home/runner/cloud-init.sh
 
       - name: 'Get Instance IP'
