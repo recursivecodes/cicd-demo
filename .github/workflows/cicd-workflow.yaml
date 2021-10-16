@@ -32,6 +32,7 @@ jobs:
         run: |
           echo "VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_ENV
           echo $GITHUB_ENV
+          echo $VERSION
 
       - name: 'Publish JAR'
         uses: actions/upload-artifact@v2-preview
