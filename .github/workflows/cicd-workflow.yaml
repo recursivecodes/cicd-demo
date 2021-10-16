@@ -61,59 +61,37 @@ jobs:
           echo "key_file=~/.oci/key.pem" >> ~/.oci/config
           echo "${{secrets.OCI_KEY_FILE}}" >> ~/.oci/key.pem
           echo "${{secrets.VM_SSH_PUB_KEY}}" >> /home/runner/.oci/id_vm.pub
-
-      - name: 'Install OCI CLI'
-        run: |
-          curl -L -O https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh
-          chmod +x install.sh
-          ./install.sh --accept-all-defaults
-          echo "/home/runner/bin" >> $GITHUB_PATH
-          exec -l $SHELL
+          touch /home/runner/cloud-init.sh
 
       - name: 'Fix Config File Permissions'
         run: |
           oci setup repair-file-permissions --file /home/runner/.oci/config
           oci setup repair-file-permissions --file /home/runner/.oci/key.pem
 
-      - name: 'Check Existing Instance'
-        run: |
-          echo "INSTANCE_OCID=$( \
-            oci compute instance list \
-            --lifecycle-state RUNNING \
-            --compartment-id ${{secrets.VM_COMPARTMENT_OCID}} \
-            --display-name cicd-demo \
-            --query "data [0].id" \
-            --raw-output \
-          )" >> $GITHUB_ENV
-
       - name: 'Create Instance'
-        if: ${{!env.INSTANCE_OCID}}
         run: |
-          echo "INSTANCE_OCID=$( \
-            oci compute instance launch \
-              -c ${{secrets.VM_COMPARTMENT_OCID}} \
-              --availability-domain ${{secrets.VM_AVAILABILITY_DOMAIN}} \
-              --shape ${{secrets.VM_SHAPE}} \
-              --shape-config '{"memoryInGBs": 4, "ocpus": 1}' \
-              --assign-public-ip true \
-              --display-name cicd-demo \
-              --image-id ${{secrets.VM_CUSTOM_IMAGE_OCID}} \
-              --ssh-authorized-keys-file /home/runner/.oci/id_vm.pub \
-              --subnet-id ${{secrets.VM_SUBNET_OCID}} \
-              --wait-for-state RUNNING \
-              --query "data.id" \
-              --raw-output \
-          )" >> $GITHUB_ENV
+          ./gradlew --stacktrace step01 \
+            -Doci.compartment.id=${{secrets.VM_COMPARTMENT_OCID}} \
+            -Doci.instance.name=cicddemo2 \
+            -PpublicKeyFile=/home/runner/.oci/id_vm.pub
+            -PuserDataFile=/home/runner/cloud-init.sh
 
       - name: 'Get Instance IP'
         run: |
-          echo "INSTANCE_IP=$( \
-            oci compute instance list-vnics \
-            --instance-id ${{env.INSTANCE_OCID}} \
-            --query 'data [0]."public-ip"' \
-            --raw-output \
-          )" >> $GITHUB_ENV
-          echo Instance IP: ${{ env.INSTANCE_IP }}
+          more build/oci/instance/cicdgradle.properties
+          function prop {
+           grep "${1}" build/oci/instance/cicdgradle.properties|cut -d'=' -f2
+          }
+          export SEC_LIST_ID=$(prop 'vcn.security-list.id')
+          export IP=$(prop 'instance.public-ip.0')
+          echo "SECURITY_LIST_ID=$SEC_LIST_ID" >> $GITHUB_ENV
+          echo "INSTANCE_IP=$IP" >> $GITHUB_ENV
+
+      - name: 'Add Ingress Rule'
+        run: |
+          ./gradlew addIngressSecurityRule \
+            --destination-port=8080 \
+            --security-list-id=${{env.SECURITY_LIST_ID}}
 
       - name: 'Wait for SSH'
         run: |
