@@ -25,15 +25,15 @@ jobs:
           java --version
 
       - name: 'Run Tests'
-          run: |
+        run: |
             ./gradlew test
 
       - name: 'Publish Test Report'
-          if: always()
-          uses: actions/upload-artifact@v2-preview
-          with:
-            name: 'test-report'
-            path: build/reports/tests/test/*
+        if: always()
+        uses: actions/upload-artifact@v2-preview
+        with:
+          name: 'test-report'
+          path: build/reports/tests/test/*
 
       - name: 'Assemble JAR'
         run: |
