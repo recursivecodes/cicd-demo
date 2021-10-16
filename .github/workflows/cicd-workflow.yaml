@@ -94,7 +94,7 @@ jobs:
               -c ${{secrets.VM_COMPARTMENT_OCID}} \
               --availability-domain ${{secrets.VM_AVAILABILITY_DOMAIN}} \
               --shape ${{secrets.VM_SHAPE}} \
-              --shape-config '{"memoryInGBs": 6, "ocpus": 1}' \
+              --shape-config '{"memoryInGBs": 4, "ocpus": 1}' \
               --assign-public-ip true \
               --display-name cicd-demo \
               --image-id ${{secrets.VM_CUSTOM_IMAGE_OCID}} \
