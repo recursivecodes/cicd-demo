@@ -30,7 +30,7 @@ jobs:
 
       - name: 'Get Version Number'
         run: |
-          echo "echo VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_ENV
+          "echo VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_ENV
           echo $GITHUB_ENV
           echo ${{env.VERSION}}
 
