@@ -1,6 +1,6 @@
 applicationType: default
 defaultPackage: codes.recursive
-testFramework: junit
+testFramework: spock
 sourceLanguage: java
 buildTool: gradle
-features: [annotation-api, app-name, gradle, http-client, java, java-application, junit, logback, netty-server, readme, shade, yaml]
+features: [annotation-api, app-name, gradle, http-client, java, java-application, spock, logback, netty-server, readme, shade, yaml]
