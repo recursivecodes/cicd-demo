@@ -59,7 +59,7 @@ if(! hasProperty("userDataFile")){
 }
 def step01 = tasks.register('step01', org.kordamp.gradle.plugin.oci.tasks.instance.SetupInstanceTask) {
     verbose       = true
-    image         = 'ocid1.image.oc1..aaaaaaaasg27sapsv2jvksbcrgdmzzgwrxngrzk6chqzb6xrxau655pwylfq'
+    image         = 'java-11-custom-image'
     shape         = 'VM.Standard.E4.Flex'
     publicKeyFile = file("${project.publicKeyFile}")
     userDataFile  = file("${project.userDataFile}")
