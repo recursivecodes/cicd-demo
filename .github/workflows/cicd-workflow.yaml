@@ -113,6 +113,7 @@ jobs:
             --query 'data [0]."public-ip"' \
             --raw-output \
           )" >> $GITHUB_ENV
+          echo Instance IP: ${{ env.INSTANCE_IP }}
 
       - name: 'Wait for SSH'
         run: |
@@ -145,16 +146,6 @@ jobs:
           source: "build/libs/cicd-demo-${{env.VERSION}}-all.jar"
           target: "app"
           strip_components: 2
-
-      - name: 'Open Firewall Port'
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ env.INSTANCE_IP }}
-          username: opc
-          key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
-          script: |
-            sudo firewall-cmd --permanent --zone=public --add-port=8080/tcp
-            sudo firewall-cmd --reload
 
       - name: 'Start App'
         uses: appleboy/ssh-action@master
