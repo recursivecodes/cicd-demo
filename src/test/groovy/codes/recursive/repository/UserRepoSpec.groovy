@@ -11,9 +11,9 @@ class UserRepoSpec extends AbstractSpec {
     def "Can create a user"() {
         when:
         UserRepository userRepository = context.getBean(UserRepository)
-        def user = new User("Todd", "Sharp", 43, "todd.sharp@oracle.com")
+        User user = new User("Todd", "Sharp", 43, "todd.sharp@oracle.com")
         userRepository.save(user)
         then:
-        userRepository.findByFirstName("Todd").size() > 0
+        userRepository.findById(user.getId()).get().getId() == user.getId()
     }
 }

@@ -3,6 +3,7 @@ package codes.recursive.domain;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.data.annotation.AutoPopulated;
 import io.micronaut.data.annotation.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -31,4 +32,11 @@ public class User {
     @Email
     @Size(max = 500)
     private String email;
+
+    public User(String firstName, String lastName, int age, @Nullable String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.email = email;
+    }
 }
