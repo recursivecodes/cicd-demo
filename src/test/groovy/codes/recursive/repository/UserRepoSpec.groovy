@@ -16,3 +16,4 @@ class UserRepoSpec extends AbstractSpec {
         then:
         userRepository.findById(user.getId()).get().getId() == user.getId()
     }
+}
