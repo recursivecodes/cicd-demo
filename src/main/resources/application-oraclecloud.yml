@@ -1,0 +1,14 @@
+datasources:
+  default:
+    driverClassName: oracle.jdbc.driver.OracleDriver
+    connectionFactoryClassName: oracle.jdbc.pool.OracleDataSource
+    ocid: ${DATASOURCE_OCID}
+    walletPassword: ${DATASOURCE_WALLET_PASSWORD}
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    schema-generate: NONE
+    dialect: ORACLE
+oci:
+  config:
+    instance-principal:
+      enabled: true
