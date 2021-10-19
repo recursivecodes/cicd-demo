@@ -1,0 +1,9 @@
+datasources:
+  default:
+    url: ${DATASOURCE_URL}
+    driverClassName: oracle.jdbc.driver.OracleDriver
+    connectionFactoryClassName: oracle.jdbc.pool.OracleDataSource
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    schema-generate: NONE
+    dialect: ORACLE
