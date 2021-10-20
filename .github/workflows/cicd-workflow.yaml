@@ -81,7 +81,7 @@ jobs:
         uses: steebchen/kubectl@master
         with:
           config: ${{secrets.OKE_KUBE_CONFIG}}
-          command: delete pod $(kubectl get pod -l app=cicd_demo -o jsonpath="{.items[0].metadata.name}")
+          command: delete pod $(kubectl get pod -l app=cicd-demo-app -o jsonpath="{.items[0].metadata.name}")
 
 
 
