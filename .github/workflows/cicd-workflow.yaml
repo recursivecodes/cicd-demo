@@ -51,10 +51,10 @@ jobs:
 
       - name: 'Login To OCIR'
         uses: actions-hub/docker/login@master
-        env:
-          DOCKER_USERNAME: ${{secrets.OCIR_USERNAME}}
-          DOCKER_PASSWORD: ${{secrets.OCIR_PASSWORD}}
-          DOCKER_REGISTRY_URL: phx.ocir.io
+        with:
+          registry: phx.ocir.io
+          username: ${{secrets.OCIR_USERNAME}}
+          password: ${{secrets.OCIR_PASSWORD}}
 
       - name: 'Docker Build'
         run: |
@@ -62,8 +62,6 @@ jobs:
           ./gradlew dockerBuild
 
       - name: 'Docker Push'
-        if: success()
-        uses: actions-hub/docker@master
         run: |
           ./gradlew dockerPush
 
