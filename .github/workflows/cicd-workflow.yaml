@@ -65,4 +65,27 @@ jobs:
         run: |
           ./gradlew dockerPush
 
+      - name: 'Create Password Secret'
+        uses: steebchen/kubectl@master
+        env:
+          KUBE_CONFIG_DATA: ${{secrets.OKE_KUBE_CONFIG}}
+        with:
+          args: "create secret generic cicd-secrets --from-literal=dbUsername='${{secrets.DATASOURCE_USERNAME}}' --from-literal=dbPassword='${{secrets.DATASOURCE_PASSWORD}}' --from-literal=dbWalletPassword='${{secrets.DATASOURCE_WALLET_PASSWORD}}' --from-literal=dbOcid='${{secrets.DATASOURCE_OCID}}' --save-config --dry-run -o yaml | kubectl apply -f -"
+
+      - name: 'Deploy To Kubernetes'
+        uses: steebchen/kubectl@master
+        env:
+          KUBE_CONFIG_DATA: ${{secrets.OKE_KUBE_CONFIG}}
+        with:
+          args: '"apply -f ./k8s/app.yaml"'
+
+      - name: 'Kill Pod'
+        uses: steebchen/kubectl@master
+        env:
+          KUBE_CONFIG_DATA: ${{secrets.OKE_KUBE_CONFIG}}
+        with:
+          args: '"delete pod $(kubectl get pod -l app=cicd_demo -o jsonpath="{.items[0].metadata.name}")"'
+
+
+
 

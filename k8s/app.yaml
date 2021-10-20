@@ -1,0 +1,63 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: cicd_demo
+  labels:
+    app: cicd_demo
+spec:
+  type: LoadBalancer
+  selector:
+    app: cicd_demo
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: cicd_demo
+  labels:
+    app: cicd_demo
+    version: v1
+spec:
+  selector:
+    matchLabels:
+      app: cicd_demo
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: cicd_demo
+        version: v1
+    spec:
+      containers:
+        - name: cicd_demo
+          image: phx.ocir.io/toddrsharp/cicd-demo/cicd-demo:latest
+          env:
+            - name: DATASOURCE_OCID
+              valueFrom:
+                secretKeyRef:
+                  name: cicd-secrets
+                  key: dbOcid
+            - name: DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: cicd-secrets
+                  key: dbUsername
+            - name: DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cicd-secrets
+                  key: dbPassword
+            - name: DATASOURCE_WALLET_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: cicd-secrets
+                  key: dbWalletPassword
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: regcred
