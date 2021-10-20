@@ -26,7 +26,6 @@ jobs:
 
       - name: 'Run Tests'
         run: |
-            ./gradlew test
 
       - name: 'Publish Test Report'
         if: always()
@@ -50,7 +49,7 @@ jobs:
           path: build/libs/*-all.jar
 
       - name: 'Login To OCIR'
-        uses: actions-hub/docker/login@master
+        uses: docker/login@master
         with:
           registry: phx.ocir.io
           username: ${{secrets.OCIR_USERNAME}}
