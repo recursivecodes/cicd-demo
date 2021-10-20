@@ -24,10 +24,6 @@ jobs:
         run: |
           java --version
 
-      - name: 'List Dependencies'
-        run: |
-          ./gradlew dependencies
-
       - name: 'Run Tests'
         run: |
             ./gradlew test

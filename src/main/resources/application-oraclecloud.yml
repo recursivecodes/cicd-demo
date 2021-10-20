@@ -12,7 +12,3 @@ oci:
   config:
     instance-principal:
       enabled: true
-liquibase:
-  datasources:
-    default:
-      enabled: false
