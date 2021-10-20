@@ -1,13 +1,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: cicd_demo
+  name: cicd-demo-app
   labels:
     app: cicd_demo
 spec:
   type: LoadBalancer
   selector:
-    app: cicd_demo
+    app: cicd-demo-app
   ports:
     - name: http
       protocol: TCP
@@ -17,23 +17,23 @@ spec:
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: cicd_demo
+  name: cicd-demo-app
   labels:
-    app: cicd_demo
+    app: cicd-demo-app
     version: v1
 spec:
   selector:
     matchLabels:
-      app: cicd_demo
+      app: cicd-demo-app
   replicas: 1
   template:
     metadata:
       labels:
-        app: cicd_demo
+        app: cicd-demo-app
         version: v1
     spec:
       containers:
-        - name: cicd_demo
+        - name: cicd-demo-app
           image: phx.ocir.io/toddrsharp/cicd-demo/cicd-demo:latest
           env:
             - name: DATASOURCE_OCID
