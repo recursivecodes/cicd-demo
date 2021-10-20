@@ -25,6 +25,7 @@ jobs:
           java --version
 
 
+
       - name: 'Assemble JAR'
         run: |
           ./gradlew assemble
@@ -40,7 +41,7 @@ jobs:
           path: build/libs/*-all.jar
 
       - name: 'Login To OCIR'
-        uses: docker/login@master
+        uses: docker/login-action@v1
         with:
           registry: phx.ocir.io
           username: ${{secrets.OCIR_USERNAME}}
