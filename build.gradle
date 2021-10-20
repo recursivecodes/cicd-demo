@@ -56,5 +56,13 @@ java {
     targetCompatibility = JavaVersion.toVersion("11")
 }
 
+dockerfile {
+    baseImage("adoptopenjdk/openjdk11-openj9:jdk-11.0.11_9_openj9-0.26.0-alpine-slim")
+    exportPorts(8080)
+}
+
+dockerBuild {
+    images = ["phx.ocir.io/toddrsharp/cicd-demo/cicd-demo:latest"]
+}
 
 
