@@ -75,13 +75,15 @@ jobs:
         uses: steebchen/kubectl@master
         with:
           config: ${{secrets.OKE_KUBE_CONFIG}}
-          command: '"apply -f ./k8s/app.yaml"'
+
+          command: apply -f ./k8s/app.yaml
 
       - name: 'Kill Pod'
         uses: steebchen/kubectl@master
         with:
           config: ${{secrets.OKE_KUBE_CONFIG}}
-          command: '"delete pod $(kubectl get pod -l app=cicd_demo -o jsonpath="{.items[0].metadata.name}")"'
+          version: v1.17.0
+          command: delete pod $(kubectl get pod -l app=cicd_demo -o jsonpath="{.items[0].metadata.name}")
 
 
 
