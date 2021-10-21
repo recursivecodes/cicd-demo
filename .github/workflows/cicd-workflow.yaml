@@ -157,3 +157,6 @@ jobs:
             sudo mv ~/app/cicd-demo-${{env.VERSION}}-all.jar /app/cicd-demo.jar
             nohup java -jar /app/cicd-demo.jar > output.$(date --iso).log 2>&1 &
 
+      - name: 'Echo'
+        run: |
+          echo 'Hi'
