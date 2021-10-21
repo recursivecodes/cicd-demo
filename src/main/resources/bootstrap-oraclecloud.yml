@@ -1,7 +1,7 @@
-micronaut:
-  config-client:
-    enabled: true
 oci:
+  config:
+    instance-principal:
+      enabled: true
   vault:
     config:
       enabled: true
