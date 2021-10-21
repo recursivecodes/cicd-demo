@@ -1,0 +1,10 @@
+micronaut:
+  config-client:
+    enabled: true
+oci:
+  vault:
+    config:
+      enabled: true
+    vaults:
+      - ocid:
+        compartment-ocid:

@@ -1,0 +1,10 @@
+micronaut:
+  config-client:
+    enabled: true
+oci:
+  vault:
+    config:
+      enabled: true
+    vaults:
+      - ocid: ocid1.vault.oc1.phx.bvqxdasfaadfa.abyhqljrqjg7nubigkqpkwsprd2k4t4cznldtft7prctxq7pnuexjh2en4oa
+        compartment-ocid: ocid1.compartment.oc1..aaaaaaaa7lzppsdxt6j56zhpvy6u5gyrenwyc2e2h4fak5ydvv6kt7anizbq
