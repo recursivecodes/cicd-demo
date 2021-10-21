@@ -155,10 +155,5 @@ jobs:
           key: ${{ secrets.VM_SSH_PRIVATE_KEY }}
           script: |
             sudo mv ~/app/cicd-demo-${{env.VERSION}}-all.jar /app/cicd-demo.jar
-            nohup java \
-              -DDATASOURCE_OCID=${{secrets.DATASOURCE_OCID}} \
-              -DDATASOURCE_USERNAME=${{secrets.DATASOURCE_USERNAME}} \
-              -DDATASOURCE_PASSWORD=${{secrets.DATASOURCE_PASSWORD}} \
-              -DDATASOURCE_WALLET_PASSWORD=${{secrets.DATASOURCE_WALLET_PASSWORD}} \
-              -jar /app/cicd-demo.jar > output.$(date --iso).log 2>&1 &
+            nohup java -jar /app/cicd-demo.jar > output.$(date --iso).log 2>&1 &
 
