@@ -77,10 +77,8 @@ jobs:
           function prop {
            grep "${1}" build/oci/instance/cicdgradle.properties|cut -d'=' -f2
           }
-          export "SEC_LIST_ID=$(prop 'vcn.security-list.id')" >> $GITHUB_ENV
-          export "IP=$(prop 'instance.public-ip.0')" >> $GITHUB_ENV
-          echo "SECURITY_LIST_ID=$SEC_LIST_ID" >> $GITHUB_ENV
-          echo "INSTANCE_IP=$IP" >> $GITHUB_ENV
+          echo "SECURITY_LIST_ID=$(prop 'vcn.security-list.id')" >> $GITHUB_ENV
+          echo "IP=$(prop 'instance.public-ip.0')" >> $GITHUB_ENV
 
       - name: 'Add Ingress Rule'
         run: |
