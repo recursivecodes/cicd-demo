@@ -12,3 +12,5 @@ out/
 .settings
 .classpath
 .factorypath
+build-resource/
+bootstrap-localadb.yml
