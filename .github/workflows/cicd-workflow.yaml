@@ -78,7 +78,7 @@ jobs:
            grep "${1}" build/oci/instance/cicddemo2.properties|cut -d'=' -f2
           }
           echo "SECURITY_LIST_ID=$(prop 'vcn.security-list.id')" >> $GITHUB_ENV
-          echo "IP=$(prop 'instance.public-ip.0')" >> $GITHUB_ENV
+          echo "INSTANCE_IP=$(prop 'instance.public-ip.0')" >> $GITHUB_ENV
 
       - name: 'Add Ingress Rule'
         run: |
