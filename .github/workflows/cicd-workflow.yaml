@@ -1,44 +1,22 @@
-name: cicd-demo
+name: Build
+
 on:
-  push:
-    branches:
-      - '*'
+  release:
+    types: [created]
+
 jobs:
-  build-job:
-    name: Build Job
+  publish:
     runs-on: ubuntu-latest
+
     steps:
-      - name: 'Start build job'
-        run: |
-          echo "Starting the build job."
+      - uses: actions/checkout@v2
 
-      - name: 'Checkout'
-        uses: actions/checkout@v2
-
-      - name: 'Setup Java'
+      - name: Set up JDK 1.8
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 1.8
 
-      - name: 'Check Java Version'
-        run: |
-          java --version
-
-      - name: 'Assemble JAR'
-        run: |
-          ./gradlew assemble
-
-      - name: 'Get Version Number'
-        run: |
-          echo "VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')" >> $GITHUB_ENV
-
-      - name: 'Test'
-        run: |
-          echo $GITHUB_ENV
-          echo ${{env.VERSION}}
-
-      - name: 'Publish JAR'
-        uses: actions/upload-artifact@v2-preview
-        with:
-          name: 'cicd-demo-${{env.VERSION}}-all.jar'
-          path: build/libs/*-all.jar
+      - name: Deploy to GitHub
+        run: mvn --batch-mode -DuseGitHubPackages=true deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
