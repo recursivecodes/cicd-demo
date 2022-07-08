@@ -123,7 +123,7 @@ jobs:
           done; echo "SSH ready!"
 
       - name: 'Stop App'
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{env.INSTANCE_IP}}
           username: opc
@@ -138,7 +138,7 @@ jobs:
             sudo mkdir -p /app
 
       - name: 'Push JAR'
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ env.INSTANCE_IP }}
           username: opc
@@ -148,7 +148,7 @@ jobs:
           strip_components: 2
 
       - name: 'Start App'
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v0.1.4
         with:
           host: ${{ env.INSTANCE_IP }}
           username: opc
